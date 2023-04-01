@@ -16,7 +16,6 @@
         <h1 class="text-[1.75rem] sm:text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
          Notes
         </h1>
-
         <!--  -->
         <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 text-[#252525]">
                   <div v-for="document in documents" :key="document.id" class="p-4 sm:p-6 bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative">
