@@ -2,8 +2,6 @@
 echo "Starting the deployment process"
 
 #pull from the branch
-git reset --hard HEAD
-
 git pull origin main
 
 #install deps
