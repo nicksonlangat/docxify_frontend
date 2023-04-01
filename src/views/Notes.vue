@@ -32,7 +32,7 @@
                     <h3>{{ document.created_at }}</h3>
                   </div>
                   
-              <div v-if="isEmpty" class="w-full col-span-2 text-center py-10 border-2 border-rose-400 rounded-xl text-gray-500">
+              <div v-if="documents.length == 0" class="w-full col-span-2 text-center py-10 border-2 border-rose-400 rounded-xl text-gray-500">
                 <img
                   alt="empty"
                   src="../assets/icons8-empty-box-64.png"

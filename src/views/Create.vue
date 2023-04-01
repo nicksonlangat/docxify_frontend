@@ -6,20 +6,21 @@
           <h1 class="font-bold text-[1.75rem] text-center">Create a record</h1>
           <form>
             <select
-              type="text"
-              placeholder="Type"
+            v-model="document.type"
               class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg">
-            <option value="">Note</option>
-            <option value="">Task</option>
-            <option value="">Document</option>
+              <option value="" selected>---Please select---</option>
+            <option value="Note">Note</option>
+            <option value="Task">Task</option>
+            <option value="Document">Document</option>
             </select>
             <input
+            v-model="document.title"
               type="text"
               placeholder="Title"
               class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
             />
             <textarea
-              type="email"
+              v-model="document.description"
               placeholder="Description"
               class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
             />
@@ -29,9 +30,7 @@
               class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
             />
             
-            <button
-              class="w-full bg-rose-400 my-4 p-3 outline-none rounded-lg"
-            >
+            <button @click="saveDocument" class="w-full bg-rose-400 my-4 p-3 outline-none rounded-lg">
               Submit
             </button>
           </form>
@@ -42,12 +41,39 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 import { RouterLink } from 'vue-router';
+import { mapActions } from 'vuex';
 
 export default {
-  name: 'Register',
+  name: 'Create',
   components: {
     Navigation,
     RouterLink
-}
+},
+data() {
+        return {
+            document: {
+                type: "",
+                title: "",
+                description: "",
+                file: null,
+                author: ""
+            },
+        }
+    },
+
+methods: {
+        ...mapActions({
+          createDocument: 'createDocument'
+        }),
+        saveDocument(e){
+            this.createDocument({
+                data: this.document,
+                cb: (resp) => {
+                    this.$router.push({"name": "notes"})
+                    }
+            })
+            e.preventDefault()
+        }
+    }
 }
 </script>
