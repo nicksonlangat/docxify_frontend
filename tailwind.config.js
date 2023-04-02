@@ -9,8 +9,6 @@ module.exports = {
       fontFamily: {
         over: "'Overpass', sans-serif",
         dyna: "'DynaPuff', cursive",
-        kalam: '"Kalam"',
-        philo: '"Philosopher"'
       },
       backgroundImage: {
         // home: "url('./assets/cinema.png')",
