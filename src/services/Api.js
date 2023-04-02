@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default () => {
     const Api = axios.create({
-        baseURL: process.env.VUE_APP_BASE_URL,
+        baseURL: "http://docxify-api.techwithnick.com/", //"http://localhost:8000/",
         withCredentials: false,
         headers: {
             Accept: 'application/json',
