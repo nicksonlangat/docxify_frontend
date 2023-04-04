@@ -79,19 +79,26 @@ createDocument({ commit }, { data, cb }) {
               cb(response.data)
           }
       })
-      .catch((error) => Promise.reject(error))
+      .catch((error) => console.log(error))
     
     },
 
-    getDocuments({ commit }, {cb }) {
+    getDocuments({ commit }, {cb, type, status}) {
+      let endpoint = ""
+      if (status!=undefined) {
+        endpoint = `/documents/?type=${type}&&status=${status}`
+      }
+      else {
+        endpoint = `/documents/?type=${type}`
+      }
       return  Api()
-          .get('/documents/')
+          .get(endpoint)
           .then((response) => {
               if (cb) {
                   cb(response.data)
               }
           })
-          .catch((error) => Promise.reject(error))
+          .catch((error) => console.log(error))
     },
 
 

@@ -38,8 +38,8 @@
          
             <div v-if="isLoggedIn" class="flex gap-3 items-center">
               <div class="px-5 py-[4px] border-[#ffab91] rounded-lg flex items-center gap-2">
-                <h2 class="text-white">Hi {{ user?.user.full_name }}</h2>
-                <img alt="user" src="../assets/undraw_male_avatar_g98d.svg" class="w-6 h-6 mb-2" />
+                <h2 class="text-white">Hi, {{ user?.user.full_name }}</h2>
+               
               </div>
               <button @click="logOut" class="bg-rose-500 font-bold text-white text-[0.90rem] px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
                 Logout

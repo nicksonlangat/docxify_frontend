@@ -110,6 +110,7 @@ methods: {
   },
 mounted() {
     this.getDocuments({
+        type: "Note",
         cb: (res=>{
             this.documents = res
         })
