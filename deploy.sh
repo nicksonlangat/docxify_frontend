@@ -5,10 +5,10 @@ echo "Starting the deployment process"
 git pull origin main
 
 #install deps
-npm install 
+# npm install 
 
 #build for prod
-npm run build
+# npm run build
 
 #restart nginx
 sudo systemctl restart nginx
