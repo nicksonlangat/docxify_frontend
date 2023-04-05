@@ -5,7 +5,7 @@ jobs:
       - image: arvindr226/alpine-ssh
     steps:
       - checkout
-      - run: ssh -oStrictHostKeyChecking=no -v $SSH_USER@$SSH_HOST "cd docxify && sudo ./deploy.sh"
+      - run: ssh -oStrictHostKeyChecking=no -v $SSH_USER@$SSH_HOST "cd docxify && sudo chmod u+x deploy.sh && sudo ./deploy.sh"
 
   build-and-test:
     working_directory: ~/project

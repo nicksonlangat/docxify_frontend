@@ -21,7 +21,7 @@
         <!--first:row-span-2  -->
         <div class="w-full ">
                   
-                  <div class="grid grid-cols-3 gap-x-20">
+                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-20">
                     <div>
               <h2 class="text-2xl font-bold mb-4">Task backlog</h2>
                 <draggable class="space-y-4"
