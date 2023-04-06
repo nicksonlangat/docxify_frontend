@@ -3,10 +3,10 @@
     <Navigation />
     <div class="w-full px-4 sm:px-[100px] py-[100px] text-white">
       <div class="flex justify-between">
-          <h1 class="text-[1.75rem] text-[#e9ebed] sm:text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
+          <h1 class="text-[1.75rem] text-[#e9ebed] font-bold">
        Documents
       </h1>
-      <div class="relative flex items-center mb-8">
+      <div class="relative flex items-center ">
               <button class="absolute right-0 focus:outline-none rtl:left-0 rtl:right-auto">
                   
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-4 text-gray-400 transition-colors duration-300 dark:text-gray-500 hover:text-gray-500">
@@ -29,9 +29,11 @@
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-green-500 w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75v6.75m0 0l-3-3m3 3l3-3m-8.25 6a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-red-400 w-6 h-6">
+                <span @click="deleteItem(document.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-red-400 w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                 </svg>
+                </span>
             </div>
           </div>
           <a :href="document.file" target="_blank" class="font-bold text-sky-600">{{ document.title }}.pdf</a>

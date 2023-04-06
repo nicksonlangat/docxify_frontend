@@ -44,19 +44,7 @@
               </div>
             </RouterLink>
           </div>
-          <!-- <div
-            class="w-[150px] h-[75px] fixed z-[999] grid grid-cols-4 gap-1 hold"
-          >
-            <div class="rounded-full bg-rose-400 tile1"></div>
-            <div class="rounded-full bg-[#ffab91] tile2"></div>
-            <div class="rounded-full bg-[#e7ed9b] tile3"></div>
-            <div class="rounded-full bg-[#cf94da] tile4"></div>
-
-            <div class="rounded-full bg-emerald-400 tile5"></div>
-            <div class="rounded-full bg-yellow-300 tile6"></div>
-            <div class="rounded-full bg-slate-400 tile7"></div>
-            <div class="rounded-full bg-red-600 tile8"></div>
-          </div> -->
+        
         </section>
       </main>
     </div>
