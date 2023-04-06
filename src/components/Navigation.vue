@@ -1,14 +1,14 @@
 <template>
   <header>
-      <div class="w-full bg-[#29445D] px-12 lg:px-[100px] fixed top-0 left-0 border-b border-slate-600 sm:flex items-center z-[100] hidden">
-        <RouterLink to="#" class="mr-auto">
+      <div class="w-full bg-[#2a3240] px-12 lg:px-[100px] fixed top-0 left-0 border-b border-slate-600 sm:flex items-center z-[100] hidden">
+        <div class="mr-auto">
           <div class="flex items-center gap-[0px] ml-[-10px] cursor-pointer">
             <img alt="logo" src="../assets/note app logo.png" class="w-16 h-16" />
             <p class="font-dyna text-[1.5rem] text-rose-300 tracking-widest">
               Docxify
             </p>
           </div>
-        </RouterLink>
+        </div>
         <nav class="w-[65%] flex items-center">
           <div v-if="isLoggedIn" class="flex items-center gap-6 lg:gap-16 mr-auto">
             <RouterLink
@@ -50,7 +50,7 @@
 
       {/* mobile header */}
       <div
-        class="sm:hidden w-full h-[70px] px-5 bg-[#29445D] fixed top-0 left-0 z-[100] border-b-[0px] border-b-[#47a3b3] flex justify-between items-center shadow-md"
+        class="sm:hidden w-full h-[70px] px-5 bg-[#2a3240] fixed top-0 left-0 z-[100] border-b-[0px] border-b-[#47a3b3] flex justify-between items-center shadow-md"
       >
         <RouterLink to="#" class="mr-auto">
           <div class="flex items-center gap-[0px] ml-[-10px] cursor-pointer">
@@ -79,32 +79,33 @@
             
               class="w-[35%] h-screen float-left"
             ></div>
-            <ul class="slide float-right w-[65%] h-full bg-[#29445D] px-[30px] text-[1rem] text-white pt-[100px] text-center">
+            <ul class="slide float-right w-[65%] h-full bg-[#2a3240] px-[30px] text-[1rem] text-white pt-[100px] text-center">
             
-                <li class="w-[fit-content] my-6 mx-auto flex items-center justify-center gap-2 border-2 border-rose-400 px-2 py-1 rounded-lg">
+                <li class="w-[fit-content] my-6 mx-auto flex items-center justify-center gap-2 px-2 py-1 rounded-lg">
                   <div class="text-rose-400 font-bold text-[1.25rem]">
                    <p>Nick Langat</p>
                   </div>
-                  <img alt="user" src="../assets/undraw_male_avatar_g98d.svg" class="w-8 h-8" />
+                  
                 </li>
             
               <li class="my-4">
               
-                  <div class="w-full">Home</div>
+                <RouterLink to="/">Home</RouterLink>
                
               </li>
               <li class="my-4">
               
-                  <div class="w-full">Notes</div>
+                  
+                  <RouterLink to="/notes">Notes</RouterLink>
                
               </li>
               <li class="my-4">
               
-                  <div class="w-full">Tasks</div>
+                <RouterLink to="/tasks">Tasks</RouterLink>
                
               </li>
                 <li class="my-4">
-                    <div class="w-full">Documents</div>
+                  <RouterLink to="/documents">Documents</RouterLink>
                 </li>
                 <li>
                   <div class="w-full">Log Out</div>

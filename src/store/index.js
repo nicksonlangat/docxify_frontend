@@ -72,7 +72,8 @@ createDocument({ commit }, { data, cb }) {
           title: data.title,
           description: data.description,
           file: data.file,
-          author: data.author
+          author: data.author,
+          status: data.status
       })
       .then((response) => {
           if (cb) {
@@ -101,7 +102,28 @@ createDocument({ commit }, { data, cb }) {
           .catch((error) => console.log(error))
     },
 
-
+    updateDocument({ commit }, { data, id, cb }) {
+      return  Api()
+          .patch(`/documents/${id}/`, data)
+          .then((response) => {
+              if (cb) {
+                  cb(response.data)
+              }
+          })
+          .catch((error) => console.log(error))
+        
+        },
+    deleteDocument({ commit }, { id, cb }) {
+      return  Api()
+          .delete(`/documents/${id}`)
+          .then((response) => {
+              if (cb) {
+                  cb(response.data)
+              }
+          })
+          .catch((error) => console.log(error))
+        
+        },
   },
   modules: {
   }

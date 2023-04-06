@@ -73,21 +73,6 @@ methods: {
         },
         saveDocument(e){
           e.preventDefault()
-
-          // const data ={
-          //        title: this.document.title,
-          //        type: this.document.type,
-          //        description: this.document.description,
-          //        author: this.document.author,  
-          // }
-          
-          // const formData = new FormData()
-          
-          // formData.set('title', data.title)
-          // formData.set('description', data.description)
-          // formData.set('type', data.type)
-          // formData.set('author', data.author)
-          // formData.append('file', this.docArray, this.docArray.name)
          
           this.createDocument({
                 data: this.document,

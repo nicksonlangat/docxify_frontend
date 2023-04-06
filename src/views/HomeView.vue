@@ -3,7 +3,7 @@
       <Navigation />
     <main class="bg-home bg-repeat min-h-screen">
         <section
-          class="w-full min-h-screen bg-[#29445D] px-3 sm:px-[100px] sm:pt-[130px] pt-20 pb-8"
+          class="w-full min-h-screen bg-[#2a3240] px-3 sm:px-[100px] sm:pt-[130px] pt-20 pb-8"
         >
           <div class="block sm:flex items-center">
             <div class="w-full sm:w-1/2 sm:mr-auto mb-10 sm:mb-0">
@@ -31,14 +31,14 @@
                     Sign Up to get started
                   </button>
                 </RouterLink>
-                <RouterLink  v-else to="/create">
+                <RouterLink  v-else to="/notes">
                   <button class="bg-rose-500 text-[0.90rem] mt-8 sm:mt-12 px-5 py-2 rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
                     Create new note
                   </button>
                 </RouterLink>
             
             </div>
-            <RouterLink v-if="user != null" to="/create">
+            <RouterLink v-if="user != null" to="/notes">
               <div class="w-12 text-white text-center h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
                 +
               </div>
