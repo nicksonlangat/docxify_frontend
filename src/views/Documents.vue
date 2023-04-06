@@ -21,7 +21,7 @@
       <!--first:row-span-2  -->
       
      
-      <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 text-[#252525]">
+      <div class="w-full grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 text-[#252525]">
         <div v-for="document in filteredDocuments" class="p-4 bg-[#e9ebed] rounded-md text-gray-800 space-y-2">
           <div class="flex justify-between">
             <div class="text-gray-800 text-xs">{{ formatDate(document.created_at) }}</div>
@@ -46,17 +46,17 @@
                   src="../assets/icons8-empty-box-64.png"
                   class="w-1/3 h-auto mb-4 mx-auto"
                 />
-                <p class="font-bold text-[2rem]">No notes yet...</p>
-                <RouterLink to="/create">
-                  <button class="bg-rose-500 text-[0.90rem] mt-8 text-white sm:mt-12 px-5 py-2 rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
-                    Create new note
+                <p class="font-bold text-[2rem]">No documents yet...</p>
+                
+                  <button @click="toggleModal()" class="bg-rose-500 text-[0.90rem] mt-8 text-white sm:mt-12 px-5 py-2 rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                    Upload one
                   </button>
-                </RouterLink>
+               
               </div>
            
           </div>
         
-          <div v-on:click="toggleModal()" class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
+          <div @click="toggleModal()" class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
             +
           </div>
 
