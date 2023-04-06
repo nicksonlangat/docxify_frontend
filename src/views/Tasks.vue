@@ -23,16 +23,20 @@
                   
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-20">
                     <div>
-              <h2 class="text-2xl font-bold mb-4">Task backlog</h2>
+              <h2 class="text-2xl font-bold mb-4 text-[#febd2f]">Task backlog</h2>
                 <draggable class="space-y-4"
                 :list="pendingTasks" 
                 :group="{ name: 'tasks'}"
                 style="min-height:400px"
                 >
-                <div   v-for="task in pendingTasks" :key="task.title" class="p-4 bg-[#FB7185] rounded-md text-gray-800 space-y-2">
+                <div   v-for="task in pendingTasks" :key="task.title" class="p-4 bg-[#febd2f] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
-                    <div class="text-gray-800 text-xs">Number 10</div>
-                    <div class="text-gray-700 text-xs">{{ formatDate(task.created_at) }}</div>
+                    <div class="text-gray-800 text-xs">{{ formatDate(task.created_at) }}</div>
+                    <span @click="deleteItem(task.id)" class="text-rose-500 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                    </span>
                   </div>
                   <span class="font-bold">{{ task.title }}</span>
                   <div class="text-sm text-gray-900 font-kalam">
@@ -44,7 +48,7 @@
             </div>
          
             <div>
-              <h2 class="text-2xl font-bold mb-4">Ongoing Tasks</h2>
+              <h2 class="text-2xl font-bold mb-4 text-[#e9eef2]">Ongoing Tasks</h2>
 
               <div  class="space-y-4">
                 <draggable class="space-y-4" 
@@ -52,10 +56,14 @@
                 :group="{ name: 'tasks'}"
                 style="min-height:400px"
                 >
-                <div v-for="task in ongoingTasks" class="p-4 bg-white rounded-md text-gray-800 space-y-2">
+                <div v-for="task in ongoingTasks" class="p-4 bg-[#e9eef2] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
-                    <div class="text-gray-800 text-xs">Number 10</div>
-                    <div class="text-gray-700 text-xs">4h</div>
+                    <div class="text-gray-800 text-xs">{{ formatDate(task.created_at) }}</div>
+                    <span @click="deleteItem(task.id)" class="text-rose-500 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                    </span>
                   </div>
                   <span class="font-bold">{{ task.title }}</span>
                   <div class="text-sm text-gray-900 font-kalam">
@@ -66,7 +74,7 @@
               </div>
             </div>
             <div>
-              <h2 class="text-2xl font-bold mb-4">Completed tasks</h2>
+              <h2 class="text-2xl font-bold mb-4 text-[#74bde0]">Completed tasks</h2>
 
               <div class="space-y-4">
                 <draggable class="space-y-4" 
@@ -74,10 +82,14 @@
                 :group="{ name: 'tasks'}"
                 style="min-height:400px"
                 >
-                <div v-for="task in doneTasks" class="p-4 bg-[#188A94] rounded-md text-gray-800 space-y-2">
+                <div v-for="task in doneTasks" class="p-4 bg-[#74bde0] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
-                    <div class="text-gray-800 text-xs">Number 10</div>
-                    <div class="text-gray-700 text-xs">4h</div>
+                    <div class="text-gray-800 text-xs">{{ formatDate(task.created_at) }}</div>
+                    <span @click="deleteItem(task.id)" class="text-rose-500 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                    </span>
                   </div>
                   <span class="font-bold">{{ task.title }}</span>
                   <div class="text-sm text-gray-900 font-kalam">
@@ -106,12 +118,66 @@
            
           </div>
           
-        <RouterLink to="/create">
-          <div class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
+      
+          <div v-on:click="toggleModal()" class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
             +
           </div>
-        </RouterLink>
-        <!--  -->
+        
+
+       
+    <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+      
+      <div class="relative w-full h-full max-w-lg md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-[#2a3240] rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-5 border-b rounded-t">
+                <h3 class="text-xl font-medium text-white uppercase">
+                    New Task
+                </h3>
+                <button @click="toggleModal" type="button" class="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span> 
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+              <form enctype="multipart/form-data">
+            <select
+            v-model="document.status"
+              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg">
+              <option value="Pending" selected>Pending</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Done">Done</option>
+            
+            </select>
+            <input
+            v-model="document.title"
+              type="text"
+              placeholder="Title"
+              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+            />
+            <textarea
+              v-model="document.description"
+              placeholder="Description"
+              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+            />
+          </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex justify-between p-6 space-x-2 border-t border-white rounded-b">
+                <button @click="toggleModal" type="button" class="text-white bg-[#d7415d] focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
+                <button @click="saveTask" type="button" class="text-white bg-blue-500 focus:outline-none rounded-lg text-sm font-medium px-5 py-2.5  focus:z-10">
+                  Save
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+ 
+    <!--  -->
     </div>
     </div>
    
@@ -132,39 +198,51 @@ export default {
     draggable,
 },
 data: ()=>({
-    isEmpty: false,
     tasks: [0],
     pendingTasks: [],
     ongoingTasks: [],
     doneTasks: [],
-    text: ""
-}),
-computed: {
-      // pendingTasks() {
-      // return this.tasks.filter((task) => {
-      //     return task.status.toLowerCase().includes("pending")
-      // })},
-
-      // ongoingTasks() {
-      // return this.tasks.filter((task) => {
-      //     return task.status.toLowerCase().includes("ongoing")
-      // })},
-
-      // doneTasks() {
-      // return this.tasks.filter((task) => {
-      //     return task.status.toLowerCase().includes("done")
-      // })}
+    text: "",
+    showModal: false,
+    document: {
+      type: "Task",
+      status: "Pending",
+      title: "",
+      description: "",
+      author: ""
     },
+}),
 methods: {
   ...mapActions({
-    getDocuments: 'getDocuments'
+    getDocuments: 'getDocuments',
+    createDocument: 'createDocument',
+    deleteDocument: 'deleteDocument'
   }),
-
+  saveTask(e){
+      e.preventDefault()
+      this.createDocument({
+            data: this.document,
+            cb: (resp) => {
+              this.toggleModal()
+              this.init()
+          }
+        })
+    },
   formatDate(value) {
     return moment(value).format("MMM Do YY")
   },
-},
-mounted() {
+  toggleModal(){
+      this.showModal = !this.showModal;
+  },
+  deleteItem(id) {
+    this.deleteDocument({
+        id: id,
+        cb: (res=>{
+            this.init()
+        })
+    }) 
+  },
+  init() {
     this.getDocuments({
         type: "Task",
         status: "pending",
@@ -188,6 +266,11 @@ mounted() {
             this.doneTasks = res
         })
     }) 
+  }
+  
+},
+mounted() {
+    this.init()
 }
 }
 </script>

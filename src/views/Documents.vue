@@ -3,7 +3,7 @@
     <Navigation />
     <div class="w-full px-4 sm:px-[100px] py-[100px] text-white">
       <div class="flex justify-between">
-          <h1 class="text-[1.75rem] sm:text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
+          <h1 class="text-[1.75rem] text-[#e9ebed] sm:text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
        Documents
       </h1>
       <div class="relative flex items-center mb-8">
@@ -22,7 +22,7 @@
       
      
       <div class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 text-[#252525]">
-        <div v-for="document in filteredDocuments" class="p-4 bg-white rounded-md text-gray-800 space-y-2">
+        <div v-for="document in filteredDocuments" class="p-4 bg-[#e9ebed] rounded-md text-gray-800 space-y-2">
           <div class="flex justify-between">
             <div class="text-gray-800 text-xs">{{ formatDate(document.created_at) }}</div>
             <div class="text-gray-700 flex gap-2 text-xs">
@@ -56,11 +56,57 @@
            
           </div>
         
-      <RouterLink to="/create">
-        <div class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
-          +
+          <div v-on:click="toggleModal()" class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
+            +
+          </div>
+
+          <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+      
+      <div class="relative w-full h-full max-w-lg md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-[#2a3240] rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-5 border-b rounded-t">
+                <h3 class="text-xl font-medium text-white uppercase">
+                    Upload document
+                </h3>
+                <button @click="toggleModal" type="button" class="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <span class="sr-only">Close modal</span> 
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+              <form enctype="multipart/form-data">
+            
+            <input
+            v-model="document.title"
+              type="text"
+              placeholder="Title"
+              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+            />
+            <input
+            name="docArray" @change="onChange"
+              type="file"
+              placeholder="Document"
+              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+            />
+            
+          </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex justify-between p-6 space-x-2 border-t border-white rounded-b">
+                <button @click="toggleModal" type="button" class="text-white bg-[#d7415d] focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
+                <button @click="saveDocument" type="button" class="text-white bg-blue-500 focus:outline-none rounded-lg text-sm font-medium px-5 py-2.5  focus:z-10">
+                  Save
+                </button>
+            </div>
         </div>
-      </RouterLink>
+    </div>
+    </div>
+
+    <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+ 
       <!--  -->
   </div>
   </div>
@@ -82,7 +128,14 @@ export default {
 },
 data: ()=>({
     documents: [],
-    text: ""
+    text: "",
+    showModal: false,
+    document: {
+      type: "Document",
+      title: "",
+      author: ""
+    },
+    docArray: null
 }),
 computed: {
       filteredDocuments() {
@@ -93,20 +146,48 @@ computed: {
     },
 methods: {
   ...mapActions({
-    getDocuments: 'getDocuments'
+    getDocuments: 'getDocuments',
+    createDocument: 'createDocument',
+    deleteDocument: 'deleteDocument'
   }),
-
+  onChange (event) {
+          this.docArray = event.target.files[0]
+  },
+  saveDocument(e){
+      e.preventDefault()
+      this.createDocument({
+            data: this.document,
+            cb: (resp) => {
+              this.toggleModal()
+              this.init()
+          }
+        })
+    },
+  deleteItem(id) {
+    this.deleteDocument({
+        id: id,
+        cb: (res=>{
+            this.init()
+        })
+    }) 
+  },
+  toggleModal(){
+      this.showModal = !this.showModal;
+  },
   formatDate(value) {
     return moment(value).format("MMM Do YY")
-  }
   },
-mounted() {
+  init() {
     this.getDocuments({
         type: "Document",
         cb: (res=>{
             this.documents = res
         })
     }) 
+  }
+  },
+mounted() {
+    this.init()
 }
 }
 </script>
