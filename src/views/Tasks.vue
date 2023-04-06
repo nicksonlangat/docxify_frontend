@@ -28,6 +28,7 @@
                 :list="pendingTasks" 
                 :group="{ name: 'tasks'}"
                 style="min-height:400px"
+                @change="handlePendingChange"
                 >
                 <div   v-for="task in pendingTasks" :key="task.title" class="p-4 bg-[#febd2f] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
@@ -55,6 +56,7 @@
                 :list="ongoingTasks" 
                 :group="{ name: 'tasks'}"
                 style="min-height:400px"
+                @change="handleOngoingChange"
                 >
                 <div v-for="task in ongoingTasks" class="p-4 bg-[#e9eef2] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
@@ -81,6 +83,7 @@
                 :list="doneTasks" 
                 :group="{ name: 'tasks'}"
                 style="min-height:400px"
+                @change="handleDoneChange"
                 >
                 <div v-for="task in doneTasks" class="p-4 bg-[#74bde0] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
@@ -216,7 +219,8 @@ methods: {
   ...mapActions({
     getDocuments: 'getDocuments',
     createDocument: 'createDocument',
-    deleteDocument: 'deleteDocument'
+    deleteDocument: 'deleteDocument',
+    updateDocument: 'updateDocument'
   }),
   saveTask(e){
       e.preventDefault()
@@ -228,6 +232,30 @@ methods: {
           }
         })
     },
+  handlePendingChange(event){
+      if (event.hasOwnProperty('added')) {
+        this.updateTask(event.added.element.id, 'Pending')
+      }
+  },
+  handleOngoingChange(event){
+      if (event.hasOwnProperty('added')) {
+        this.updateTask(event.added.element.id, 'Ongoing')
+      }
+  },
+  handleDoneChange(event){
+      if (event.hasOwnProperty('added')) {
+        this.updateTask(event.added.element.id, 'Done')
+      }
+  },
+  updateTask(id, status) {
+    this.updateDocument({
+      id: id,
+      data: {"status": status},
+      cb: (res=>{
+        this.init()
+      })
+    })
+  },
   formatDate(value) {
     return moment(value).format("MMM Do YY")
   },
