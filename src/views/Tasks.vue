@@ -30,36 +30,50 @@
                 style="min-height:400px"
                 @change="handlePendingChange"
                 >
-                <div   v-for="task in pendingTasks" :key="task.title" class="p-4 bg-[#febd2f] rounded-md text-gray-800 ">
+                <div v-for="(task, index) in pendingTasks" :key="index" class="p-4 bg-[#febd2f] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
-                    <span class="font-bold">{{ task.title }}</span>
-                   
-                    <span @click="deleteItem(task.id)" class="cursor-pointer bg-rose-500 rounded-full text-white py-1 px-1 text-xs ">
+                    <span  v-if="is_edited !== task.id"  class="font-bold cursor-pointer">{{ task.title }}</span>
+                    <input id="title" :value="task.title" v-if="is_edited == task.id" type="text" class="w-full font-bold bg-inherit p-1 outline-none">
+                    <span v-if="is_edited == task.id" @click="cancelEdit()" class="cursor-pointer rounded-full text- py-1 px-1 text-xs ">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+
+                    </span>
+                    <span v-if="is_edited !== task.id" @click="deleteItem(task.id)" class="cursor-pointer bg-rose-500 rounded-full text-white py-1 px-1 text-xs ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                     </svg>
                     </span>
                   </div>
                  
-                  <div class="text-sm text-gray-900 font-kalam">
+                  <div v-if="is_edited !== task.id" class="text-sm text-gray-900 font-kalam">
                     {{ task.description }}
-                    </div>
+                  </div>
+                  <textarea v-if="is_edited == task.id" rows="2" id="description" 
+                    :value="task.description"
+                    class="w-full text-xs font-kalam bg-inherit p-1 outline-none resize-none rounded">
+                  </textarea>
                    
                     <div class="flex justify-between">
-                       <div class="text-gray-800 text-xs mt-2">{{ formatDate(task.created_at) }}</div>
-                      <span class="cursor-pointer bg-[#2a3240] rounded-full text-white py-1 px-1" >
+                       <div class="text-gray-800 text-xs mt-2">{{ formatDate(task.modified_at) }}</div>
+                      <span v-if="is_edited !== task.id" @click="toggleTitleEdit(task.id)" class="cursor-pointer bg-[#2a3240] rounded-full text-white py-1 px-1" >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                         </svg>
                       </span>
+                      <span v-if="is_edited == task.id" @click="updateTaskDetails(task.id)" class="cursor-pointer bg-emerald-500 rounded text-white py-0.1 px-2" >
+                        Save
+                      </span>
                     </div>
+                  
                 </div>
              
               </draggable>
             </div>
          
             <div>
-              <h2 class="text-2xl font-bold mb-4 text-[#e9eef2]">Ongoing Tasks</h2>
+              <h2 class="text-2xl font-bold mb-4 text-[#74bde0]">Ongoing Tasks</h2>
 
               <div  class="space-y-4">
                 <draggable class="space-y-4" 
@@ -68,27 +82,40 @@
                 style="min-height:400px"
                 @change="handleOngoingChange"
                 >
-                <div v-for="task in ongoingTasks" class="p-4 bg-[#e9eef2] rounded-md text-gray-800 space-y-2">
+                <div v-for="(task, index) in ongoingTasks" :key="index" class="p-4 bg-[#74bde0] rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
-                    <span class="font-bold">{{ task.title }}</span>
-                   
-                    <span @click="deleteItem(task.id)" class="cursor-pointer bg-rose-500 rounded-full text-white py-1 px-1 text-xs ">
+                    <span  v-if="is_edited !== index"  class="font-bold cursor-pointer">{{ task.title }}</span>
+                    <input id="title" :value="task.title" v-if="is_edited == index" type="text" class="w-full font-bold bg-inherit p-1 outline-none">
+                    <span v-if="is_edited == index" @click="cancelEdit()" class="cursor-pointer rounded-full text- py-1 px-1 text-xs ">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+
+                    </span>
+                    <span v-if="is_edited !== index" @click="deleteItem(task.id)" class="cursor-pointer bg-rose-500 rounded-full text-white py-1 px-1 text-xs ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                     </svg>
                     </span>
                   </div>
                  
-                  <div class="text-sm text-gray-900 font-kalam">
+                  <div v-if="is_edited !== index" class="text-sm text-gray-900 font-kalam">
                     {{ task.description }}
-                    </div>
+                  </div>
+                  <textarea v-if="is_edited == index" rows="2" id="description" 
+                    :value="task.description"
+                    class="w-full text-xs font-kalam bg-inherit p-1 outline-none resize-none rounded">
+                  </textarea>
                    
                     <div class="flex justify-between">
                        <div class="text-gray-800 text-xs mt-2">{{ formatDate(task.created_at) }}</div>
-                      <span class="cursor-pointer bg-[#2a3240] rounded-full text-white py-1 px-1" >
+                      <span v-if="is_edited !== index" @click="toggleTitleEdit(index)" class="cursor-pointer bg-[#2a3240] rounded-full text-white py-1 px-1" >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                         </svg>
+                      </span>
+                      <span v-if="is_edited == index" @click="updateTaskDetails(task.id)" class="cursor-pointer bg-emerald-500 rounded text-white py-0.1 px-2" >
+                        Save
                       </span>
                     </div>
                   
@@ -97,7 +124,7 @@
               </div>
             </div>
             <div>
-              <h2 class="text-2xl font-bold mb-4 text-[#74bde0]">Completed tasks</h2>
+              <h2 class="text-2xl font-bold mb-4 text-emerald-500">Completed tasks</h2>
 
               <div class="space-y-4">
                 <draggable class="space-y-4" 
@@ -106,30 +133,43 @@
                 style="min-height:400px"
                 @change="handleDoneChange"
                 >
-                <div v-for="task in doneTasks" class="p-4 bg-[#74bde0] rounded-md text-gray-800 space-y-2">
+                <div v-for="(task, index) in doneTasks" :key="index" class="p-4 bg-emerald-300 rounded-md text-gray-800 space-y-2">
                   <div class="flex justify-between">
-                    <span class="font-bold">{{ task.title }}</span>
-                   
-                    <span @click="deleteItem(task.id)" class="cursor-pointer bg-rose-500 rounded-full text-white py-1 px-1 text-xs ">
+                    <span  v-if="is_edited !== task.id"  class="font-bold cursor-pointer">{{ task.title }}</span>
+                    <input id="title" :value="task.title" v-if="is_edited == task.id" type="text" class="w-full font-bold bg-inherit p-1 outline-none">
+                    <span v-if="is_edited == task.id" @click="cancelEdit()" class="cursor-pointer rounded-full text- py-1 px-1 text-xs ">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+
+                    </span>
+                    <span v-if="is_edited !== task.id" @click="deleteItem(task.id)" class="cursor-pointer bg-rose-500 rounded-full text-white py-1 px-1 text-xs ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                     </svg>
                     </span>
                   </div>
                  
-                  <div class="text-sm text-gray-900 font-kalam">
+                  <div v-if="is_edited !== task.id" class="text-sm text-gray-900 font-kalam">
                     {{ task.description }}
-                    </div>
+                  </div>
+                  <textarea v-if="is_edited == task.id" rows="3" id="description" 
+                    :value="task.description"
+                    class="w-full text-xs font-kalam bg-inherit p-1 outline-none resize-none rounded">
+                  </textarea>
                    
                     <div class="flex justify-between">
-                       <div class="text-gray-800 text-xs mt-2">{{ formatDate(task.created_at) }}</div>
-                      <span class="cursor-pointer bg-[#2a3240] rounded-full text-white py-1 px-1" >
+                       <div class="text-gray-800 text-xs mt-2">{{ formatDate(task.modified_at) }}</div>
+                      <span v-if="is_edited !== task.id" @click="toggleTitleEdit(task.id)" class="cursor-pointer bg-[#2a3240] rounded-full text-white py-1 px-1" >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                         </svg>
                       </span>
+                      <span v-if="is_edited == task.id" @click="updateTaskDetails(task.id)" class="cursor-pointer bg-emerald-500 rounded text-white py-0.1 px-2" >
+                        Save
+                      </span>
                     </div>
-                   
+                  
                 </div>
               </draggable> 
               </div>
@@ -201,7 +241,7 @@
             <!-- Modal footer -->
             <div class="flex justify-between p-6 space-x-2 border-t border-white rounded-b">
                 <button @click="toggleModal" type="button" class="text-white bg-[#d7415d] focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
-                <button @click="saveTask" type="button" class="text-white bg-blue-500 focus:outline-none rounded-lg text-sm font-medium px-5 py-2.5  focus:z-10">
+                <button @click="saveTask" type="button" class="text-white bg-emerald-500 focus:outline-none rounded-lg text-sm font-medium px-5 py-2  focus:z-10">
                   Save
                 </button>
             </div>
@@ -233,6 +273,7 @@ export default {
 },
 data: ()=>({
     tasks: [0],
+    is_edited: null,
     pendingTasks: [],
     ongoingTasks: [],
     doneTasks: [],
@@ -286,6 +327,25 @@ methods: {
         this.init()
       })
     })
+  },
+  toggleTitleEdit(index) {
+    this.is_edited = index
+  },
+  updateTaskDetails(id) {
+    this.updateDocument({
+      id: id,
+      data: {
+        "title": document.getElementById('title').value,
+        "description": document.getElementById('description').value
+      },
+      cb: (res=>{
+        this.cancelEdit()
+        this.init()
+      })
+    })
+  },
+  cancelEdit() {
+    this.is_edited = null
   },
   formatDate(value) {
     return moment(value).format("MMM Do YY")
