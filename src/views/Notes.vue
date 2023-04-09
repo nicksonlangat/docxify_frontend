@@ -51,8 +51,8 @@
                     </span>
 
                    </div>
-                    <p v-show="editDescription !== index"  @click="toggleDescriptionEdit(index)" class="font-kalam text-[18px]">{{ document.description }}</p>
-                    <textarea v-show="editDescription === index" rows="6" id="description" v-on:keyup.enter="updateDescription(document.id)" 
+                    <p v-if="editDescription !== index"  @click="toggleDescriptionEdit(index)" class="font-kalam text-[18px]">{{ document.description }}</p>
+                    <textarea v-if="editDescription === index" rows="6" id="description" v-on:keyup.enter="updateDescription(document.id)" 
                     :value="document.description"
                     class="w-full text-[18px] font-kalam bg-inherit p-1 outline-none resize-none rounded">
                     </textarea>
