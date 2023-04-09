@@ -38,22 +38,22 @@
             </div>
             <!-- End New Note  -->
             <!-- list notes -->
-            <div v-for="document in filteredDocuments" :key="document.id" class="p-4 sm:p-6 bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] rounded-lg relative"> 
+            <div v-for="(document, index) in filteredDocuments" :key="index" class="p-4 sm:p-6 bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] rounded-lg relative"> 
                 <div class="flex justify-between">
-                    <h2 v-show="editTitle !== document.id"  @click="toggleTitleEdit(document.id)" class="text-[24px] mb-3 font-bold">
+                    <h2 v-if="is_edited !== index"  @click="toggleTitleEdit(index)" class="text-[24px] mb-3 font-bold">
                      {{ document.title }}
                     </h2>
-                    <input id="title" v-on:keyup.enter="updateTitle(document.id)" :value="document.title" v-show="editTitle === document.id" type="text" class="w-full text-[24px] font-bold bg-inherit p-1 outline-none rounded">
-                     <span @click="deleteItem(document.id)" v-show="editTitle !== document.id" class="text-rose-500 mt-2">
+                    <input id="title" v-on:keyup.enter="updateTitle(document.id)" :value="document.title" v-if="is_edited == index" type="text" class="w-full text-[24px] font-bold bg-inherit p-1 outline-none rounded">
+                     <span @click="deleteItem(document.id)"  v-if="is_edited !== index"  class="text-rose-500 mt-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                     </svg>
                     </span>
 
                    </div>
-                    <p v-show="editDescription !== document.id"  @click="toggleDescriptionEdit(document.id)" class="font-kalam text-[18px]">{{ document.description }}</p>
-                    <textarea v-show="editDescription === document.id" rows="6" id="description" v-on:keyup.enter="updateDescription(document.id)" 
-                    :value="document.description" v-if="editDescription" 
+                    <p v-show="editDescription !== index"  @click="toggleDescriptionEdit(index)" class="font-kalam text-[18px]">{{ document.description }}</p>
+                    <textarea v-show="editDescription === index" rows="6" id="description" v-on:keyup.enter="updateDescription(document.id)" 
+                    :value="document.description"
                     class="w-full text-[18px] font-kalam bg-inherit p-1 outline-none resize-none rounded">
                     </textarea>
                     
@@ -97,7 +97,7 @@ import { mapActions} from 'vuex';
 import moment from "moment";
 
 export default {
-  name: 'Register',
+  name: 'Notes',
   components: {
     Navigation,
     RouterLink
@@ -105,13 +105,13 @@ export default {
 data: ()=>({
     documents: [],
     text: "",
-    editTitle: null,
-    editDescription: null,
     note: {
         title: "Add title",
         description: "Add description"
     },
     isNewNote: false,
+    is_edited: null,
+    editDescription: null,
 }),
 watch: {
     
@@ -146,26 +146,18 @@ methods: {
   formatDate(value) {
     return moment(value).format("MMM Do YY")
   },
-  toggleTitleEdit(id) {
-    if (this.editTitle === id) {
-        this.editTitle = null
-      } else {
-        this.editTitle = id
-      }
+  toggleTitleEdit(index) {
+    this.is_edited = index
   },
-  toggleDescriptionEdit(id) {
-    if (this.editDescription === id) {
-        this.editDescription = null
-      } else {
-        this.editDescription = id
-      }
+  toggleDescriptionEdit(index) {
+    this.editDescription = index
   },
   updateTitle(id) {
     this.updateDocument({
         data: {"title": document.getElementById('title').value},
         id: id,
         cb: (res=>{
-            this.toggleTitleEdit()
+            this.is_edited = null
             this.init()
         })
     }) 
@@ -175,7 +167,7 @@ methods: {
         data: {"description": document.getElementById('description').value},
         id: id,
         cb: (res=>{
-            this.toggleDescriptionEdit()
+            this.editDescription = null
             this.init()
         })
     }) 
