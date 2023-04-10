@@ -16,7 +16,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </button>
-                <input type="text" v-model="text" placeholder="Search notes..." class="w-full bg-rose-400/20 my-4 px-8 p-3 outline-none rounded-lg">
+                <input type="text" v-model="text" placeholder="Search notes..." class="w-full bg-gray-600 my-4 px-8 p-3 outline-none rounded-lg">
             </div>
         </div>
         <!--  -->
@@ -59,7 +59,7 @@
                     
                     <div class="flex justify-between mt-4">
                         <span class=" rounded px-2 py-1 text-sm font-normal text-gray-700">
-                            {{ formatDate(document.created_at) }}
+                            {{ formatDate(document.modified_at) }}
                         </span>   
                     </div>
             </div>
@@ -82,7 +82,7 @@
           </div>
           
           <!-- Floating button -->
-          <div @click="toggleNewNote" class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
+          <div @click="toggleNewNote" class="hover:animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
             +
           </div>
           <!--  -->

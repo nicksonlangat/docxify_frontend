@@ -84,6 +84,18 @@ createDocument({ commit }, { data, cb }) {
     
     },
 
+    uploadDocument({ commit }, { data, cb }) {
+      return  Api()
+          .post('/documents/', data)
+          .then((response) => {
+              if (cb) {
+                  cb(response.data)
+              }
+          })
+          .catch((error) => console.log(error))
+        
+        },
+
     getDocuments({ commit }, {cb, type, status}) {
       let endpoint = ""
       if (status!=undefined) {

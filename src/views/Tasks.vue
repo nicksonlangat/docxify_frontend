@@ -15,7 +15,7 @@
 
                 </button>
 
-                <input type="text" v-model="text" placeholder="Search tasks..." class="w-full bg-rose-400/20 my-4 px-8 p-3 outline-none rounded-lg">
+                <input type="text" v-model="text" placeholder="Search tasks..." class="w-full bg-gray-600 my-4 px-8 p-3 outline-none rounded-lg">
             </div>
         </div>
         <!--first:row-span-2  -->
@@ -193,7 +193,7 @@
           </div>
           
       
-          <div @click="toggleModal()" class="animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
+          <div @click="toggleModal()" class="hover:animate-bounce w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
             +
           </div>
         
@@ -219,7 +219,7 @@
               <form enctype="multipart/form-data">
             <select
             v-model="document.status"
-              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg">
+              class="w-full bg-gray-600 my-4 p-3 outline-none rounded-lg">
               <option value="Pending" selected>Pending</option>
             <option value="Ongoing">Ongoing</option>
             <option value="Done">Done</option>
@@ -229,12 +229,12 @@
             v-model="document.title"
               type="text"
               placeholder="Title"
-              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+              class="w-full bg-gray-600 my-4 p-3 outline-none rounded-lg"
             />
             <textarea
               v-model="document.description"
               placeholder="Description"
-              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+              class="w-full bg-gray-600 my-4 p-3 outline-none rounded-lg"
             />
           </form>
             </div>
