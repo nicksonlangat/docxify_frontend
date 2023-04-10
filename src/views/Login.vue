@@ -67,6 +67,7 @@ methods: {
             this.loginUser({
                 data: this.user,
                 cb: (resp) => {
+                    localStorage.setItem("isAuthenticated", true)
                     this.$router.push({"name": "notes"})
                     }
             })

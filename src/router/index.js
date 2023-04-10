@@ -7,6 +7,7 @@ import Notes from '../views/Notes.vue'
 import Tasks from '../views/Tasks.vue'
 import Documents from '../views/Documents.vue'
 import Create from '../views/Create.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -29,17 +30,26 @@ const routes = [
   {
     path: '/notes',
     name: 'notes',
-    component: Notes
+    component: Notes,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/tasks',
     name: 'tasks',
-    component: Tasks
+    component: Tasks,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/documents',
     name: 'documents',
-    component: Documents
+    component: Documents,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/create',
@@ -59,6 +69,17 @@ const routes = [
 const router = new VueRouter({
   routes,
   linkExactActiveClass: '!bg-rose-400 px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300',
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!localStorage.getItem("isAuthenticated")) {
+      next('/login')
+   }
+   return next()
+  } else {
+     next()
+  }
 })
 
 export default router

@@ -117,7 +117,6 @@
 </template>
 <script>
 import { RouterLink } from 'vue-router'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Navigation',
@@ -133,25 +132,19 @@ data() {
     },
 
 methods: {
-
-  ...mapGetters({
-    getCurrentUser: 'getCurrentUser',
-    getLoginStatus: 'getLoginStatus',
-  }),
-
   logOut() {
     localStorage.removeItem("currentUser")
+    localStorage.removeItem("isAuthenticated")
     this.$router.push({"name": "login"})
   },
   toggleNav() {
     this.navOpen =! this.navOpen
   }
-
   },
 
 mounted() {
-  this.user = this.getCurrentUser()
-  this.isLoggedIn = this.getLoginStatus()
+  this.user = JSON.parse(localStorage.getItem("currentUser"))
+  this.isLoggedIn = localStorage.getItem("isAuthenticated")
 }
 }
 </script>

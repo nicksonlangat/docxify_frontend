@@ -284,7 +284,7 @@ data: ()=>({
       status: "Pending",
       title: "",
       description: "",
-      author: ""
+      author:  JSON.parse(localStorage.getItem("currentUser")).user.id
     },
 }),
 methods: {
@@ -301,9 +301,14 @@ methods: {
             cb: (resp) => {
               this.toggleModal()
               this.init()
+              this.resetTask()
           }
         })
     },
+  resetTask() {
+    this.document.title = ""
+    this.document.description = ""
+  },
   handlePendingChange(event){
       if (event.hasOwnProperty('added')) {
         this.updateTask(event.added.element.id, 'Pending')
