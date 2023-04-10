@@ -107,7 +107,8 @@ data: ()=>({
     text: "",
     note: {
         title: "Add title",
-        description: "Add description"
+        description: "Add description",
+        author:  JSON.parse(localStorage.getItem("currentUser")).user.id
     },
     isNewNote: false,
     is_edited: null,
@@ -137,8 +138,13 @@ methods: {
         cb: (resp) => {
             this.toggleNewNote()
             this.init()
+            this.resetNote()
         }
     })
+  },
+  resetNote() {
+    this.note.title = "Add title"
+    this.note.description = "Add description"
   },
   toggleNewNote() {
     this.isNewNote =! this.isNewNote

@@ -68,15 +68,9 @@ data() {
     },
 
 methods: {
-  ...mapGetters({
-    getCurrentUser: 'getCurrentUser',
-  }),
-  ...mapActions({
-      loginUser: 'loginUser'
-  }),
   },
 mounted() {
-  this.user = this.getCurrentUser()
+  this.user = JSON.parse(localStorage.getItem("currentUser"))
 }
 }
 </script>

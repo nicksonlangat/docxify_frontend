@@ -136,7 +136,7 @@ data: ()=>({
     document: {
       type: "Document",
       title: "",
-      author: ""
+      author: JSON.parse(localStorage.getItem("currentUser")).user.id
     },
     docArray: null
 }),
@@ -161,6 +161,7 @@ methods: {
       let data = new FormData()
       data.append("title", this.document.title)
       data.append("type", this.document.type)
+      data.append("author", this.document.author)
       data.append("file", this.docArray, this.docArray.name)
       this.uploadDocument({
         data: data,

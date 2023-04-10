@@ -6,31 +6,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentUser: null,
-    isLoggedIn: false
   },
   getters: {
-    getCurrentUser: (state) => {
-      state.currentUser = JSON.parse(localStorage.getItem("currentUser"))
-      return state.currentUser
-  },
-  getLoginStatus: (state) => {
-    if(state.currentUser != null) {
-      state.isLoggedIn = true
-    }
-    return state.isLoggedIn
-  },
   },
 
   mutations: {
-    SET_CURRENT_USER(state, value) {
-      state.currentUser = value
-  },
-
-  SET_DOCUMENTS(state, value) {
-    state.documents = value
-  }   
-
   },
   actions: {
 
@@ -51,7 +31,7 @@ export default new Vuex.Store({
   },
 
   loginUser({ commit }, { data, cb }) {
-    return  Api()
+    return  Api('application/json', false)
         .post('/accounts/login', {
             email: data.email,
             password: data.password,
@@ -66,7 +46,7 @@ export default new Vuex.Store({
 },
 
 createDocument({ commit }, { data, cb }) {
-  return  Api()
+  return  Api('application/json', false)
       .post('/documents/', {
           type: data.type,
           title: data.title,
@@ -85,7 +65,7 @@ createDocument({ commit }, { data, cb }) {
     },
 
     uploadDocument({ commit }, { data, cb }) {
-      return  Api()
+      return  Api('multipart/formdata')
           .post('/documents/', data)
           .then((response) => {
               if (cb) {
