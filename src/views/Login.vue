@@ -1,15 +1,15 @@
 <template>
-    <div class="bg-[#29445D]">
+    <div>
     <Navigation />
     <div class="w-full min-h-[85vh] px-4 my-16 text-white flex items-center justify-center relative">
-        <div class="w-full sm:w-[550px] p-5 sm:p-10 rounded-2xl border-2 border-rose-400">
+        <div class="w-full sm:w-[550px] p-5 sm:p-10 rounded-md border-2 border-gray-400">
           <h1 class="font-bold text-[1.75rem] text-center">Login</h1>
           <form>
             <input
             v-model="user.email"
               type="email"
               placeholder="Email"
-              class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+              class="w-full bg-gray-600 my-4 p-3 outline-none rounded-lg"
             />
             
             <div class="w-full relative">
@@ -17,7 +17,7 @@
               v-model="user.password"
               type="password"
                 placeholder="Password"
-                class="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
+                class="w-full bg-gray-600 my-4 p-3 outline-none rounded-lg"
               />
               <img
                 alt="reveal"
@@ -25,7 +25,7 @@
                 class="w-5 h-5 absolute top-1/2 right-3 translate-y-[-50%] cursor-pointer"
               />
             </div>
-            <button @click="logInUser" class="w-full bg-rose-400 my-4 p-3 outline-none rounded-lg">
+            <button @click="logInUser" class="w-full bg-emerald-500 my-4 p-3 outline-none rounded-lg">
               Login
             </button>
             <p>
