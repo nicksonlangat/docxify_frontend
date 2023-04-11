@@ -67,6 +67,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
   linkExactActiveClass: '!bg-rose-400 px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300',
 })
