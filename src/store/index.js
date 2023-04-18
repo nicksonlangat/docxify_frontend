@@ -46,7 +46,7 @@ export default new Vuex.Store({
 },
 
 createDocument({ commit }, { data, cb }) {
-  return  Api('application/json', false)
+  return  Api('application/json', true)
       .post('/documents/', {
           type: data.type,
           title: data.title,
